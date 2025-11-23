@@ -12,7 +12,8 @@
     "migrate:up": "node src/migrations/migrate.js up",
     "migrate:down": "node src/migrations/migrate.js down",
     "migrate:status": "node src/migrations/migrate.js status",
-    "migrate:create": "node src/migrations/migrate.js create"
+    "migrate:create": "node src/migrations/migrate.js create",
+    "migrate:test": "cross-env NODE_ENV=test node src/migrations/migrate.js up"
   },
   "keywords": [
     "rest",
