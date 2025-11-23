@@ -48,7 +48,7 @@ REST API za upravljanje taskovima sa autentifikacijom i role-based kontrolom pri
 ### 1. Kloniraj projekat
 
 ```bash
-git clone <https://github.com/dzemilmanic/Yettel-task>
+git clone https://github.com/dzemilmanic/Yettel-task
 ```
 
 ### 2. Instaliraj zavisnosti
