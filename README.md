@@ -589,7 +589,7 @@ MIT
 
 ## 👤 Autor
 
-[Džemil Manić]
+Džemil Manić
 
 ## 🤝 Contributing
 
