@@ -41,7 +41,7 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
-// Start server and run migrations
+// Start server funkcija (ne poziva se automatski)
 async function startServer() {
   try {
     // Automatski pokreni pending migracije pri startu (opciono)
@@ -60,6 +60,9 @@ async function startServer() {
   }
 }
 
-startServer();
+// Pokreni server samo ako nije test okruženje
+if (process.env.NODE_ENV !== 'test') {
+  startServer();
+}
 
 module.exports = app;

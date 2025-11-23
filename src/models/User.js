@@ -16,10 +16,23 @@ class User {
 
   static async findById(id) {
     const result = await pool.query(
-      'SELECT id, firstName, lastName, username, email, role, createdAt, updatedAt FROM users WHERE id = $1',
+      'SELECT id, firstname, lastname, username, email, role, createdat, updatedat FROM users WHERE id = $1',
       [id]
     );
-    return result.rows[0];
+    if (!result.rows[0]) return null;
+    
+    // Mapiramo na camelCase
+    const user = result.rows[0];
+    return {
+      id: user.id,
+      firstName: user.firstname,
+      lastName: user.lastname,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      createdAt: user.createdat,
+      updatedAt: user.updatedat
+    };
   }
 
   static async findByUsername(username) {
@@ -40,9 +53,20 @@ class User {
 
   static async findAll() {
     const result = await pool.query(
-      'SELECT id, firstName, lastName, username, email, role, createdAt, updatedAt FROM users ORDER BY createdAt DESC'
+      'SELECT id, firstname, lastname, username, email, role, createdat, updatedat FROM users ORDER BY createdat DESC'
     );
-    return result.rows;
+    
+    // Mapiramo sve usere na camelCase
+    return result.rows.map(user => ({
+      id: user.id,
+      firstName: user.firstname,
+      lastName: user.lastname,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      createdAt: user.createdat,
+      updatedAt: user.updatedat
+    }));
   }
 
   static async update(id, userData) {

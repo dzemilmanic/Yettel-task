@@ -11,25 +11,57 @@ class Task {
 
   static async findById(id) {
     const result = await pool.query(
-      'SELECT t.*, u.username, u.firstName, u.lastName FROM tasks t JOIN users u ON t.userId = u.id WHERE t.id = $1',
+      'SELECT t.id, t.body, t.userid, t.createdat, t.updatedat, u.username, u.firstname, u.lastname FROM tasks t JOIN users u ON t.userid = u.id WHERE t.id = $1',
       [id]
     );
-    return result.rows[0];
+    if (!result.rows[0]) return null;
+    
+    const task = result.rows[0];
+    return {
+      id: task.id,
+      body: task.body,
+      userId: task.userid,
+      username: task.username,
+      firstName: task.firstname,
+      lastName: task.lastname,
+      createdAt: task.createdat,
+      updatedAt: task.updatedat
+    };
   }
 
   static async findByUserId(userId) {
     const result = await pool.query(
-      'SELECT t.*, u.username, u.firstName, u.lastName FROM tasks t JOIN users u ON t.userId = u.id WHERE t.userId = $1 ORDER BY t.createdAt DESC',
+      'SELECT t.id, t.body, t.userid, t.createdat, t.updatedat, u.username, u.firstname, u.lastname FROM tasks t JOIN users u ON t.userid = u.id WHERE t.userid = $1 ORDER BY t.createdat DESC',
       [userId]
     );
-    return result.rows;
+    
+    return result.rows.map(task => ({
+      id: task.id,
+      body: task.body,
+      userId: task.userid,
+      username: task.username,
+      firstName: task.firstname,
+      lastName: task.lastname,
+      createdAt: task.createdat,
+      updatedAt: task.updatedat
+    }));
   }
 
   static async findAll() {
     const result = await pool.query(
-      'SELECT t.*, u.username, u.firstName, u.lastName FROM tasks t JOIN users u ON t.userId = u.id ORDER BY t.createdAt DESC'
+      'SELECT t.id, t.body, t.userid, t.createdat, t.updatedat, u.username, u.firstname, u.lastname FROM tasks t JOIN users u ON t.userid = u.id ORDER BY t.createdat DESC'
     );
-    return result.rows;
+    
+    return result.rows.map(task => ({
+      id: task.id,
+      body: task.body,
+      userId: task.userid,
+      username: task.username,
+      firstName: task.firstname,
+      lastName: task.lastname,
+      createdAt: task.createdat,
+      updatedAt: task.updatedat
+    }));
   }
 
   static async update(id, body) {
